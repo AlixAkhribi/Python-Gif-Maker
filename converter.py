@@ -4,15 +4,20 @@ import os
 clip = os.path.abspath('NAME OF FILE')
 
 
-def gif_converter(input_path, target_format):
-    output_path = os.path.splitext(input_path)[0] + target_format
+def gif_converter(input_path):
+    """Takes in a file path of video and converts it to gif
+
+    Arguments:
+        input_path {string} -- path of video file
+    """
+
+    # Take the file path, add file extension, create output path
+    output_path = os.path.splitext(input_path)[0] + '.gif'
 
     print(f'Converting {input_path}')
 
     reader = imageio.get_reader(input_path)
-    fps = reader.get_meta_data()['fps']
-
-    writer = imageio.get_writer(output_path, fps=fps)
+    writer = imageio.get_writer(output_path, fps=60)
 
     for frames in reader:
         writer.append_data(frames)
@@ -21,4 +26,4 @@ def gif_converter(input_path, target_format):
     writer.close()
 
 
-gif_converter(clip, '.gif')
+gif_converter(clip)
